@@ -48,6 +48,18 @@ def add_oot_quant_kernel() -> None:
         _POSSIBLE_INT8_KERNELS[PlatformEnum.OOT] = list(
             _POSSIBLE_INT8_KERNELS.get(source, [])
         )
+        # T-Head PPU: prefer the ported acext int8 GEMM (vendor kernel) over
+        # cutlass/triton. is_supported() gates it to thead + acext installed.
+        try:
+            from vllm_fl.quantization.acext_int8_linear import (
+                AcextInt8ScaledMMLinearKernel,
+            )
+
+            _POSSIBLE_INT8_KERNELS[PlatformEnum.OOT].insert(
+                0, AcextInt8ScaledMMLinearKernel
+            )
+        except ImportError:
+            pass
 
     if PlatformEnum.OOT not in _POSSIBLE_FP8_KERNELS:
         _POSSIBLE_FP8_KERNELS[PlatformEnum.OOT] = list(
