@@ -337,7 +337,11 @@ class PlatformFL(Platform):
 
     @classmethod
     def support_static_graph_mode(cls) -> bool:
-        if cls.vendor_name in ["nvidia", "ascend", "metax", "hygon", "mthreads", "iluvatar"]:
+        # thead: PPU supports CUDA graph capture (the vendor's downstream
+        # vLLM runs FULL cudagraphs on this hardware); required for
+        # BreakableCUDAGraphWrapper on DeepseekV4, otherwise upstream
+        # forces cudagraph_mode=NONE and decode runs fully eager.
+        if cls.vendor_name in ["nvidia", "ascend", "metax", "hygon", "mthreads", "iluvatar", "thead"]:
             return True
         return False
 
