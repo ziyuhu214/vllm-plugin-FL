@@ -142,9 +142,11 @@ def register_model():
     # worker processes, so all runtime compatibility hooks must be idempotent.
     from vllm_fl.patches.moe_sum import patch_vllm_moe_sum
     from vllm_fl.patches.qwen3_5_text import apply_qwen3_5_text_patches
+    from vllm_fl.patches.deepseek_v4_thead import apply_deepseek_v4_thead_patches
 
     apply_qwen3_5_text_patches()
     patch_vllm_moe_sum()
+    apply_deepseek_v4_thead_patches()
 
     _register_flagcx_connector()
 
