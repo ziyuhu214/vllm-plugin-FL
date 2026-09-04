@@ -20,7 +20,7 @@ import time
 from datetime import datetime
 from statistics import mean
 
-MODEL = "/models/Qwen3.6-27B"
+MODEL = "/mnt/cpfs/models/DeepSeek-V4-Flash-0731-Quant-W-INT8-PerChannel-A-INT8-PerToken"
 
 # total runs for each case
 RUNS = 4
@@ -41,7 +41,7 @@ COMMON_ARGS = [
     "--host",
     "localhost",
     "--port",
-    "8000",
+    "8011",
     "--dataset-name",
     "random",
     "--ignore-eos",
@@ -54,7 +54,6 @@ DEFAULT_TEST_CASES = [
     (1024, 1024, 64, 256),
     (4096, 1024, 64, 256),
     (16384, 1024, 64, 256),
-    (65536, 1024, 64, 256),
 ]
 
 ALL_TEST_CASES = [
